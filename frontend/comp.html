@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fit AI - Leaderboard & Challenges</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-image: url("/frontend/assets/img/home.jpg");
+            background-repeat: no-repeat;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            padding: 20px;
+        }
+
+        .navbar {
+            background: rgba(0, 0, 0, 0.5);
+            width: 100%;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.7);
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .navbar .brand {
+            font-size: 24px;
+            color: #ff7e5f;
+            font-weight: 600;
+        }
+
+        .navbar .profile {
+            font-size: 16px;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .navbar button {
+            padding: 8px 16px;
+            background-color: #ff7e5f;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .navbar button:hover {
+            background-color: #e45d4c;
+        }
+
+        .fitness-container {
+            width: 100%;
+            max-width: 1200px;
+            padding: 30px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 12px;
+            box-shadow: 0px 5px 20px rgba(0, 72, 166, 0.5);
+            color: #ffffff;
+            text-align: left;
+            font-size: 16px;
+            line-height: 1.7;
+            margin-top: 100px;
+            max-height: none;
+            overflow: auto;
+        }
+
+        .fitness-container ul {
+            list-style-type: none;
+            padding-left: 0;
+            margin-left: 0;
+        }
+
+        .fitness-container li {
+            margin: 10px 0;
+            font-size: 16px;
+        }
+
+        .fitness-container p {
+            margin: 15px 0;
+            font-size: 16px;
+            opacity: 0;
+            transition: opacity 2s ease-in-out;
+            text-align: left;
+        }
+
+        .fitness-container p.visible {
+            opacity: 1;
+        }
+
+        .fitness-container h2 {
+            font-size: 24px;
+            margin: 20px 0;
+            color: #ff7e5f;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 32px;
+            margin-bottom: 30px;
+            color: #ff7e5f;
+        }
+
+        .footer {
+            margin-top: 30px;
+            font-size: 14px;
+            text-align: left;
+            color: white;
+            opacity: 0.8;
+        }
+
+        .loading {
+            text-align: center;
+            color: #ffffff;
+            font-size: 18px;
+        }
+
+        p {
+            margin-top: 15px;
+            font-size: 14px;
+            color: white;
+            align-items: left;
+            text-align: left;
+        }
+
+        #diet {
+            background-color: #ffffff;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 12px;
+            box-shadow: 0px 5px 20px rgba(0, 72, 166, 0.5);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #ff7e5f;
+        }
+
+        h2 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .leaderboard {
+            margin-top: 20px;
+        }
+
+        .leaderboard-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        .leaderboard-table th, .leaderboard-table td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        .leaderboard-table th {
+            background-color: #ff7e5f;
+            color: white;
+        }
+
+        .leaderboard-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .leaderboard-table tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .challenge-container {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .challenge-container select,
+        .challenge-container button {
+            padding: 12px 20px;
+            font-size: 1.2em;
+            border-radius: 5px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+
+        .challenge-container button {
+            background-color: #ff7e5f;
+            color: #fff;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .challenge-container button:hover {
+            background-color: #e45d4c;
+        }
+
+        .result {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 18px;
+            color: #ff7e5f;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="navbar">
+        <div class="brand">AuxaFit</div>
+        <div class="profile">
+            <a href="/frontend/home.html"><button>back</button></a>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <h2>Leaderboard & Challenges</h2>
+            <p>Compete with your friends and track your progress</p>
+        </div>
+
+        <div class="leaderboard">
+            <h3>Current Leaderboard</h3>
+            <table class="leaderboard-table">
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>User</th>
+                        <th>Points</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="leaderboardTable">
+                    <tr>
+                        <td>1</td>
+                        <td>John Doe</td>
+                        <td>350</td>
+                        <td><button class="btn-challenge" onclick="challengeUser('John Doe')">Challenge</button></td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Jane Smith</td>
+                        <td>300</td>
+                        <td><button class="btn-challenge" onclick="challengeUser('Jane Smith')">Challenge</button></td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Mark Lee</td>
+                        <td>280</td>
+                        <td><button class="btn-challenge" onclick="challengeUser('Mark Lee')">Challenge</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="challenge-container">
+            <h3>Challenge a Friend</h3>
+            <label for="userSelect">Select a user to challenge:</label><br>
+            <select id="userSelect">
+                <option value="John Doe">John Doe</option>
+                <option value="Jane Smith">Jane Smith</option>
+                <option value="Mark Lee">Mark Lee</option>
+            </select><br>
+            <button onclick="initiateChallenge()">Start Challenge</button>
+        </div>
+
+        <div class="result" id="challengeResult"></div>
+    </div>
+
+    <script>
+        function challengeUser(userName) {
+            alert(`You challenged ${userName}! Get ready for the competition.`);
+        }
+
+        function initiateChallenge() {
+            const selectedUser = document.getElementById('userSelect').value;
+            const resultContainer = document.getElementById('challengeResult');
+            resultContainer.innerHTML = `<p>You have started a challenge against ${selectedUser}!</p>`;
+        }
+    </script>
+</body>
+</html>

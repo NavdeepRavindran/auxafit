@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link rel="stylesheet" href="assets/profile.css">
+</head>
+<body>
+    <h2>Enter Your Profile Details</h2>
+
+    <form id="profile-form">
+        <input type="text" id="full_name" placeholder="Full Name" required>
+        <input type="number" id="age" placeholder="Age" required>
+        <select id="gender" required>
+            <option value="" disabled selected>Select Gender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+        </select>
+        <input type="number" id="height" placeholder="Height (cm)" required>
+        <input type="number" id="weight" placeholder="Weight (kg)" required>
+        <input type="text" id="goal" placeholder="Fitness Goal" required>
+
+        <div id="menstrual-cycle-container" style="display: none;">
+            <input type="text" id="menstrual-cycle" placeholder="Menstrual Cycle Details [start-End Date] (optional)">
+        </div>
+
+        <button type="submit">Save Profile</button>
+    </form>
+
+    <script>
+        document.getElementById('profile-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const fullName = document.getElementById('full_name').value;
+            const age = document.getElementById('age').value;
+            const gender = document.getElementById('gender').value;
+            const height = document.getElementById('height').value;
+            const weight = document.getElementById('weight').value;
+            const goal = document.getElementById('goal').value;
+            const menstrualCycle = gender === "Female" ? document.getElementById('menstrual-cycle').value : null;
+
+            const userProfile = {
+                full_name: fullName,
+                age: age,
+                gender: gender,
+                height: height,
+                weight: weight,
+                goal: goal,
+                menstrual_cycle: menstrualCycle
+            };
+
+            localStorage.setItem('userProfile', JSON.stringify(userProfile));
+
+            alert('Profile saved successfully!');
+            window.location.href = 'home.html';
+        });
+
+        document.getElementById('gender').addEventListener('change', function() {
+            const gender = this.value;
+            const menstrualCycleContainer = document.getElementById('menstrual-cycle-container');
+            if (gender === 'Female') {
+                menstrualCycleContainer.style.display = 'block';
+            } else {
+                menstrualCycleContainer.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

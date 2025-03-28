@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Workout Tracker</title>
+  <link rel="stylesheet" href="/frontend/assets/progress.css">
+  <style>
+    /* General body styling */
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      background-image: URL("assets/img/home.jpg");
+      padding: 0;
+      background-color: #98737357;
+      color: #333;
+    }
+
+    /* Navbar styling */
+    .navbar {
+      background: rgba(0, 0, 0, 0.7);
+      width: 100%;
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+    }
+
+    .navbar .brand {
+      font-size: 24px;
+      color: #ff7e5f;
+      font-weight: 600;
+      letter-spacing: 2px;
+    }
+
+    .navbar .profile {
+      font-size: 16px;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .navbar button {
+      padding: 10px 20px;
+      background-color: #ff7e5f;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    .navbar button:hover {
+      background-color: #e45d4c;
+    }
+
+    /* Container styling */
+    .container {
+      margin-top: 100px; /* Push content below the navbar */
+      padding: 20px;
+      background-color: rgba(255, 255, 255, 0.762);
+      text-align: center;
+    }
+
+    .container h1 {
+      font-size: 32px;
+      color: #333;
+      margin-bottom: 20px;
+      font-weight: bold;
+    }
+
+    #todo-list h2 {
+      font-size: 24px;
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    /* Input and button styling */
+    #add-workout {
+      margin-top: 30px;
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+    }
+
+    #add-workout input {
+      padding: 12px;
+      font-size: 16px;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      width: 250px;
+    }
+
+    #add-workout button {
+      padding: 12px 20px;
+      background-color: #ff7e5f;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    #add-workout button:hover {
+      background-color: #e45d4c;
+    }
+
+    /* Workout list item styling */
+    #workout-list {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    #workout-list li {
+      background: #fff;
+      margin: 10px 0;
+      padding: 15px;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+      font-size: 16px;
+      transition: 0.3s;
+    }
+
+    #workout-list li:hover {
+      box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    #workout-list .complete, #workout-list .delete {
+      padding: 8px 15px;
+      border-radius: 5px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    #workout-list .complete {
+      background-color: #ff7e5f;
+      color: white;
+    }
+
+    #workout-list .delete {
+      background-color: #000000;
+      color: white;
+    }
+
+    #workout-list .complete:hover {
+      background-color: #ff7e5f;
+    }
+
+    #workout-list .delete:hover {
+      background-color: #e53935;
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+      .navbar {
+        padding: 10px 20px;
+      }
+
+      .navbar .brand {
+        font-size: 20px;
+      }
+
+      #add-workout {
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      #add-workout input, #add-workout button {
+        width: 100%;
+        max-width: 300px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="navbar">
+    <div class="brand">
+      AuxaFit
+    </div>
+    <div class="profile">
+      <span id="profile-name"></span> | <span id="profile-email"></span>
+      <a href="/frontend/index.html"><button id="Diet">Logout</button></a>
+      <a href="/frontend/home.html"><button id="chel">Back</button></a>
+    </div>
+  </div>
+
+  <div class="container">
+    <h1>Workout Tracker</h1>
+    <div id="todo-list">
+      <h2>My Workouts</h2>
+      <ul id="workout-list"></ul>
+    </div>
+    <div id="add-workout">
+      <input type="text" id="workout-name" placeholder="Workout Name" />
+      <input type="number" id="workout-times" placeholder="Number of Times" />
+      <button onclick="addWorkout()">Add Workout</button>
+    </div>
+  </div>
+
+  <script type="module" src="/Backend/progress.js"></script>
+</body>
+</html>

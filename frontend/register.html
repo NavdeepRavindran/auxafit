@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register | AI Fitness</title>
+    <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Register</h2>
+        <div id="feedback"></div>
+
+        <form id="register-form">
+            <input type="text" id="name" placeholder="Full Name" required>
+            <input type="email" id="email" placeholder="Email" required>
+            <input type="password" id="password" placeholder="Password" required>
+            <button type="submit">Register</button>
+            <div id="registration-feedback"></div>
+
+        </form>
+        <p>Already have an account? <a href="index.html">Login</a></p>
+    </div>
+    <script src="/Backend/register.js" type="module"></script>
+</body>
+</html>

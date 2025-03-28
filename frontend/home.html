@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AuxaFit</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-image: url("/frontend/assets/img/home.jpg");
+            background-repeat: no-repeat;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            padding: 20px;
+        }
+        
+        .navbar {
+            background: rgba(0, 0, 0, 0.5);
+            width: 100%;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.7);
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        
+        .navbar .brand {
+            font-size: 24px;
+            color: #ff7e5f;
+            font-weight: 600;
+        }
+        
+        .navbar .profile {
+            font-size: 16px;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .navbar button {
+            padding: 8px 16px;
+            background-color: #ff7e5f;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        
+        .navbar button:hover {
+            background-color: #e45d4c;
+        }
+        
+        .fitness-container {
+            width: 100%;
+            max-width: 1200px;
+            padding: 30px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 12px;
+            box-shadow: 0px 5px 20px rgba(0, 72, 166, 0.5);
+            color: #ffffff;
+            text-align: left; /* Align text to left */
+            font-size: 16px;
+            line-height: 1.7;
+            margin-top: 100px;
+            max-height: none;
+            overflow: auto;
+        }
+        
+        .fitness-container ul {
+            list-style-type: none; /* Remove the default bullet points */
+            padding-left: 0;
+            margin-left: 0;
+        }
+        
+        .fitness-container li {
+            margin: 10px 0;
+            font-size: 16px;
+        }
+        
+        .fitness-container p {
+            margin: 15px 0;
+            font-size: 16px;
+            opacity: 0; /* Initially hidden */
+            transition: opacity 2s ease-in-out; /* Smooth fade-in effect */
+            text-align: left; /* Ensures text is aligned left */
+        }
+        
+        .fitness-container p.visible {
+            opacity: 1; /* Make visible once class is added */
+        }
+        
+        .fitness-container h2 {
+            font-size: 24px;
+            margin: 20px 0;
+            color: #ff7e5f;
+        }
+        
+        h1 {
+            text-align: center;
+            font-size: 32px;
+            margin-bottom: 30px;
+            color: #ff7e5f;
+        }
+        
+        .footer {
+            margin-top: 30px;
+            font-size: 14px;
+            text-align: left; /* Left-align the footer */
+            color: white;
+            opacity: 0.8;
+        }
+        
+        .loading {
+            text-align: center;
+            color: #ffffff;
+            font-size: 18px;
+        }
+        
+        p {
+            margin-top: 15px;
+            font-size: 14px;
+            color: white;
+            align-items: left;
+            text-align: left; /* Make sure text in paragraphs aligns left */
+        }
+        
+        #diet {
+            background-color: #ffffff;
+        }
+        
+    </style>
+</head>
+<body>
+
+    <div class="navbar">
+        <div class="brand">
+            AuxaFit
+        </div>
+        <div class="profile">
+            <span id="profile-name"></span> | <span id="profile-email"></span>
+            <button onclick="logout()">Logout</button>
+            <a href="/frontend/stresslevel.html"><button id="Diet">Mood Based Plan</button></a>
+            <a href="/frontend/comp.html"><button id="chel">Challenge</button></a>
+            <a href="/frontend/progress.html"><button id="chel">Progress</button></a>
+        </div>
+    </div>
+
+    <div class="fitness-container">
+        <h1>Your Personalized Fitness Plan</h1>
+        <p id="fitness-plan" class="loading">Loading fitness plan...</p>
+    </div>
+
+    <script>
+        async function generateFitnessPlan() {
+            const fitnessText = document.getElementById("fitness-plan");
+            fitnessText.innerText = "Generating fitness plan...";
+
+            const apiKey = "d96ac6d659b2d1251e4166308730ed5812eca54760e37e3917ee55b58beed285"; 
+            const apiUrl = "https://api.together.xyz/v1/chat/completions";
+
+            const userProfile = JSON.parse(localStorage.getItem('userProfile'));
+            if (!userProfile) {
+                fitnessText.innerText = "User profile not found in localStorage.";
+                return;
+            }
+
+            document.getElementById("profile-name").innerText = userProfile.full_name;
+            document.getElementById("profile-email").innerText = userProfile.email;
+
+            let prompt = `Create a personalized, human-readable fitness plan for a user with the following details:
+            Name: ${userProfile.full_name}
+            Age: ${userProfile.age}
+            Gender: ${userProfile.gender}
+            Height: ${userProfile.height} cm
+            Weight: ${userProfile.weight} kg
+            Goal: ${userProfile.goal}`;
+
+            if (userProfile.gender === "Female") {
+                const menstrualCycle = userProfile.menstrual_cycle || "Not provided";
+                prompt += `
+            Menstrual Cycle: ${menstrualCycle}`;
+            }
+
+            prompt += `
+            The plan should include a detailed workout routine and diet plan. If the gender is female then give me workout plan based on the menstrual cycle and make them comfortable. For the normal days, give The workout routine should list exercises by day of the week (e.g., Monday: Chest and Triceps), including the number of sets and repetitions. The diet plan should include meal suggestions, broken down by the type of meal (e.g., breakfast, lunch, dinner). Format the response clearly using bullet points and headings.`;
+
+            const requestData = {
+                model: "meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo-128K",
+                prompt: prompt,
+                max_tokens: 500
+            };
+
+
+            try {
+                console.log("Sending request...");
+                const response = await fetch(apiUrl, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${apiKey}`
+                    },
+                    body: JSON.stringify(requestData)
+                });
+
+                const data = await response.json();
+                console.log("API Response:", data);
+
+                if (data && data.choices && data.choices.length > 0) {
+                    const choice = data.choices[0];
+                    if (choice.message && choice.message.content) {
+                        const fitnessPlan = choice.message.content.trim();
+                        console.log("Generated Fitness Plan:", fitnessPlan);
+                        displayTypingEffect(fitnessPlan, fitnessText);
+                    } else {
+                        fitnessText.innerText = "No content found in message.";
+                        console.error("Error: 'message' does not contain 'content' property", choice.message);
+                    }
+                } else {
+                    fitnessText.innerText = "Fitness plan generation failed. Please try again!";
+                    console.error("Error: No valid choices returned", data);
+                }
+            } catch (error) {
+                console.error("Error fetching fitness plan:", error);
+                fitnessText.innerText = "Network error. Check console for details.";
+            }
+        }
+
+        function fixSpacing(text) {
+            return text.replace(/•\s?/g, ''); // Remove bullet points (•)
+        }
+
+        function formatPlan(text) {
+            let formattedText = text.replace(/\*\s?/g, "• "); // If necessary, change the bullet format
+            formattedText = formattedText.replace(/(\n\s*\n)+/g, '\n\n');
+            return formattedText.trim();
+        }
+
+        function displayTypingEffect(text, element) {
+            element.classList.add('visible'); // Add class to trigger fade-in effect
+            element.innerText = "";
+            let fixedText = fixSpacing(text);
+            let formattedText = formatPlan(fixedText);
+            let index = 0;
+
+            function typeCharacter() {
+                if (index < formattedText.length) {
+                    if (formattedText.charAt(index) === "\n") {
+                        element.innerHTML += "<br>";
+                    } else {
+                        element.innerHTML += formattedText.charAt(index);
+                    }
+                    index++;
+                    setTimeout(typeCharacter, 50);
+                }
+            }
+            typeCharacter();
+        }
+
+        function logout() {
+            localStorage.removeItem('userProfile');
+
+            window.location.href = "index.html";
+        }
+        generateFitnessPlan();
+    </script>
+</body>
+</html>
