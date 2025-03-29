@@ -42,6 +42,10 @@ Supabase: Cloud database for storing user data (workout history, progress, etc.)
 
 A Together AI model (potentially based on simple logic or a small machine learning algorithm in JavaScript) that generates workout suggestions based on user input.
 
+**Hosting:**
+
+Razorhost
+
 
 
 ## Watch our demo video
