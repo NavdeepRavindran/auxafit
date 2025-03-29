@@ -50,3 +50,21 @@ A Together AI model (potentially based on simple logic or a small machine learni
 
 
 
+
+
+
+
+![WORKOUTDB](https://github.com/user-attachments/assets/5575084c-2ddd-4f84-851c-bbe66c370b3b)
+
+![db](https://github.com/user-attachments/assets/f2a68916-e668-4ffc-bc55-14acb43652f7)
+
+![profilesetup](https://github.com/user-attachments/assets/8a0f83e9-9c97-4c9f-8fe2-1d1870ed4aee)
+
+![home](https://github.com/user-attachments/assets/6092bbb1-06e0-44dc-9a38-ec022e93de5b)
+
+![stress-level](https://github.com/user-attachments/assets/68e8f30f-ac08-46bc-b562-1477bb538081)
+
+![progress](https://github.com/user-attachments/assets/932075f3-0175-4a75-96ba-2acd5a3405e2)
+
+
+
