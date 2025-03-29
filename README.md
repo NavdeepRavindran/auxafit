@@ -48,6 +48,8 @@ A Together AI model (potentially based on simple logic or a small machine learni
 
 [Click here to watch the video] ([GOOGLE DRIVE](https://drive.google.com/file/d/1sPdJrlE01TFETYFfUz57plXcV3w0nTuJ/view?usp=drive_link))
 
+Webiste Live: https://www.auxacode.com
+
 
 
 
